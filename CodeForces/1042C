@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+using namespace std;
+priority_queue<pair<int, int> > neg;
+const int N = 2e5 + 5;
+bool still[N];
+int main()
+{
+	int n;
+	while (scanf("%d", &n) == 1)
+	{
+		int cnt = 0;
+		while (!neg.empty())
+			neg.pop();
+		memset(still, true, sizeof(still));
+		for (int i = 1; i <= n; i++)
+		{
+			int k;
+			scanf("%d", &k);
+			if (k < 0)
+			{
+				neg.push(make_pair(-k, i));
+			}
+			if (k == 0)
+			{
+				still[i] = false;
+				cnt++;
+			}
+		}
+		while (neg.size() > 1)
+		{
+			neg.pop();
+			neg.pop();
+		}
+		if (!neg.empty())
+			still[neg.top().second] = false, cnt++;
+		int pre = -1;
+
+		for (int i = 1; i <= n; i++)
+		{
+			if (!still[i])
+			{
+				if (pre == -1)
+				{
+					pre = i;
+				}
+				else
+				{
+					printf("1 %d %d\n", pre, i);
+					pre = i;
+				}
+			}
+		}
+		if (pre != -1 && cnt < n)
+		{
+			printf("2 %d\n", pre);
+		}
+		pre = -1;
+		for (int i = 1; i <= n; i++)
+		{
+			if (still[i])
+			{
+				if (pre == -1)
+				{
+					pre = i;
+				}
+				else
+				{
+					printf("1 %d %d\n", pre, i);
+					pre = i;
+				}
+			}
+		}
+	}
+	return 0;
+}

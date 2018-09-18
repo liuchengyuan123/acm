@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int N = 2e5 + 5;
+ll sum[N];
+ll a[N];
+vector<ll> v;
+int n;
+
+int lowbit(ll x)
+{
+    return x & (-x);
+}
+
+void update(int x)
+{
+    while(x <= n + 1)
+    {
+        //printf("@@@ %d\n", x);
+        sum[x]++;
+        x += lowbit(x);
+    }
+}
+
+ll query(int x)
+{
+    ll ans = 0;
+    while(x > 0)
+    {
+        //printf("!!!! %d\n", x);
+        ans += sum[x];
+        x -= lowbit(x);
+        
+    }
+    return ans;
+}
+
+int main()
+{
+    ll t;
+    cin >> n >> t;
+    a[0] = 0;
+    memset(sum, 0,sizeof(sum));
+    v.clear();
+    v.push_back(0ll);
+    for(int i = 1; i <= n; i++)
+    {
+        scanf("%lld", &a[i]);
+        a[i] += a[i - 1];
+        v.push_back(a[i]);
+    }
+    sort(v.begin(), v.end());
+    v.resize(unique(v.begin(), v.end()) - v.begin());
+    //puts("resize over");
+    ll ans = 0;
+    int position = lower_bound(v.begin(), v.end(), 0ll) - v.begin() + 1;
+    update(position);
+    //puts("initial over");
+    for(int i = 1; i <= n; i++)
+    {
+        int tmp = upper_bound(v.begin(), v.end(), a[i] - t) - v.begin() + 1;
+        ans +=  i - query(tmp - 1);
+        //printf("%d %d %lld %lld*****\n", i, tmp, ans, query(tmp - 1));
+        tmp = lower_bound(v.begin(), v.end(), a[i]) - v.begin() + 1;
+        //cout << tmp << endl;
+        update(tmp);
+        
+    }
+    cout << ans << endl;
+    return 0;
+}

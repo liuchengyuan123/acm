@@ -1,0 +1,65 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+const int N = 1005;
+ll a[8];
+const ll inf = 0x3f3f3f3f;
+int main()
+{
+	int n;
+	while (scanf("%d", &n) == 1)
+	{
+		memset(a, inf, sizeof(a));
+		for (int i = 1; i <= n; i++)
+		{
+			ll cost;
+			cin >> cost;
+			char s[10];
+			scanf("%s", s + 1);
+			ll waiter = 0;
+			for (int j = 1; j <= strlen(s + 1); j++)
+			{
+				waiter |= 1 << (s[j] - 'A');
+			}
+			a[waiter] = min(a[waiter], cost);
+		}
+		ll up = 1 << 8;
+		ll ans = 1000000000;
+		bool find = false;
+		for (ll i = 0; i < up; i++)
+		{
+			ll tmp = 0;
+			ll cos = 0;
+			bool ok = true;
+			for (int j = 0; j < 8; j++)
+			{
+				if ((i >> j) & 1)
+				{
+					if (a[j] > 100000)
+					{
+						ok = false;
+						break;
+					}
+					tmp |= j;
+					cos += a[j];
+				}
+			}
+			if (tmp == 7 && ok)
+			{
+				find = true;
+				//cout << i << " " << cos << endl;
+				ans = min(ans, cos);
+			}
+		}
+		if (find)
+		{
+			cout << ans << endl;
+		}
+		else
+		{
+			cout << -1 << endl;
+		}
+	}
+	return 0;
+}

@@ -1,3 +1,4 @@
+```cpp
 #include<bits/stdc++.h>
 using namespace std;
 const int N = 1e5 + 5;
@@ -15,3 +16,4 @@ void merge(int a, int b)
         return;
     fa[a] = b;
 }
+```

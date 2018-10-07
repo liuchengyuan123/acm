@@ -6,7 +6,7 @@ int find(int x)
 {
     if (x == fa[x])
         return x;
-    return x = fa[x];
+    return x = find(fa[x]);
 }
 void merge(int a, int b)
 {

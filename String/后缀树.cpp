@@ -10,7 +10,7 @@ struct Palindrome_Tree
     int new_node(int x)
     {
         for (int i = 0; i < 26; i++)
-            ch[x][i] = 0;
+            ch[sz][i] = 0;
         cnt[sz] = 0;
         len[sz] = x;
         return sz++;
@@ -53,6 +53,15 @@ struct Palindrome_Tree
         for (int i = sz - 1; i >= 0; i--)
             cnt[fail[i]] += cnt[i];
     }
+    void dfs(int u)
+    {
+        for (int i = 0; i < 26; i++)
+            if (ch[u][i])
+            {
+                printf("%d %d\n", u, i);
+                dfs(ch[u][i]);
+            }
+    }
 
 };
 
@@ -67,5 +76,7 @@ int main()
     for (int i = 0; i < len; i++)
         pt.add(s[i]);
     pt.counnt();
+    //pt.dfs(1);
+    //pt.dfs(0);
     return 0;
 }

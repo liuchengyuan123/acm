@@ -23,7 +23,7 @@ struct Palindrome_Tree
         last = 0;
         n = 0;
         s[0] = -1, fail[0] = 1;
-        fail[1] = 0, s[0] = 0;
+        fail[1] = 0, s[1] = 0;
     }
 
     int get_fail(int u)

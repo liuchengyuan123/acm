@@ -25,7 +25,7 @@ void write(T& ret)
     puctahr('0' + ret % 10);
 }
 
-const int N = 1e6 + 5;
+const int N = 1e5 + 5e4 + 5;
 const double PI = acos(-1);
 
 char sa[N], sb[N];
@@ -72,30 +72,42 @@ void fft(cp *a, cp *omg)
 
 int main()
 {
-    scanf("%s%s", sa, sb);
-    lena = strlen(sa), lenb = strlen(sb);
-    while (n < lena + lenb)
-        n *= 2;
-    for (int i = 0; i < lena; i++)
-        a[i].real(sa[lena - 1 - i] - '0');
-    for (int i = 0; i < lenb; i++)
-        b[i].real(sb[lenb - 1 - i] - '0');
-    init();
-    fft(a, omg);
-    fft(b, omg);
-    for (int i = 0; i < n; i++)
-        a[i] *= b[i];
-    fft(a, inv);
-    for (int i = 0; i < n; i++)
+    //freopen("1.txt", "r", stdin);
+    //freopen("out1.txt", "w", stdout);
+    while (~scanf("%s%s", sa, sb))
     {
-        res[i] += floor(a[i].real() / n + 0.5);
-        res[i + 1] += res[i] / 10;
-        res[i] %= 10;
+        lena = strlen(sa), lenb = strlen(sb);
+        n = 1;
+        while (n < lena + lenb)
+            n *= 2;
+        for (int i = 0; i <= n; i++)
+            a[i].real(0), a[i].imag(0), b[i].real(0), b[i].imag(0);
+        memset(res, 0, sizeof(res));
+        for (int i = 0; i < lena; i++)
+            a[i].real(sa[lena - 1 - i] - '0');
+        for (int i = 0; i < lenb; i++)
+            b[i].real(sb[lenb - 1 - i] - '0');
+        init();
+        fft(a, omg);
+        fft(b, omg);
+        for (int i = 0; i < n; i++)
+            a[i] *= b[i];
+        fft(a, inv);
+        for (int i = 0; i < n; i++)
+        {
+            res[i] += floor(a[i].real() / n + 0.5);
+            res[i + 1] += res[i] / 10;
+            res[i] %= 10;
+        }
+        bool flag = 0;
+        for (int i = res[lena + lenb - 1]? lena + lenb - 1: lena + lenb - 2; i >= 0; i--)
+        {
+            if (i > 0 && res[i] == 0 && !flag)
+                continue;
+            flag = 1;
+            putchar(res[i] + '0');
+        }
+        putchar('\n');
     }
-    for (int i = res[lena + lenb - 1]? lena + lenb - 1: lena + lenb - 2; i >= 0; i--)
-    {
-        putchar(res[i] + '0');
-    }
-    putchar('\n');
     return 0;
 }

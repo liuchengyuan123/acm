@@ -22,7 +22,7 @@ void write(T& ret)
         putchar('-'), ret = -ret;
     if (ret >= 10)
         write(ret / 10);
-    puctahr('0' + ret % 10);
+    putchar('0' + ret % 10);
 }
 
 const int N = 1e5 + 5e4 + 5;

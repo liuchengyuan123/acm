@@ -154,6 +154,7 @@ void solve(int qua)
 			pre[a[i]]++;
 		}
 	}
+	
 	printf("%lld\n", ans);
 }
 

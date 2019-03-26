@@ -94,14 +94,14 @@ int main()
                 int l, r;
                 ll val;
                 scanf("%d%lld", &l, &val);
-                Insert(l, l, val, 1, n, 1);
+                Insert(l, r, val, 1, n, 1);
             }
             if (op[0] == 'S')
             {
                 int l, r;
                 ll val;
                 scanf("%d%lld", &l, &val);
-                Insert(l, l, -val, 1, n, 1);
+                Insert(l, r, -val, 1, n, 1);
             }
             if (op[0] == 'Q')
             {

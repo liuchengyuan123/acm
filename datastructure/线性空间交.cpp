@@ -1,4 +1,5 @@
 //https://ac.nowcoder.com/acm/contest/884/B
+
 #include<bits/stdc++.h>
 using namespace std;
 typedef long long ll;
